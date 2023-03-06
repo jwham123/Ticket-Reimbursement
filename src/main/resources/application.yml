@@ -1,0 +1,18 @@
+server:
+  port: 8080
+spring:
+  jpa:
+    hibernate:
+      jdbc:
+        lob:
+          non_contextual_creation: true
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    defer-datasource-initialization: true
+  datasource:
+    url: jdbc:postgresql://localhost:5436/postgres
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: password
+  h2:
+    console.enabled: true
