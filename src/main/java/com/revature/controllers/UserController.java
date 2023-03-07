@@ -81,30 +81,15 @@ public class UserController {
 		return ResponseEntity.ok(optional.get());
 	}
 	
-	@Authorized(value = AuthRestriction.Admin) // Annotation that allows only logged in users to perform this function
+	@Authorized(value = AuthRestriction.Admin) // Only admins can change the roles of registered users
 	@PatchMapping("/change/{email}")
 	public ResponseEntity<Void> changeRole(@PathVariable String email) { 
-		// If you are logged in as the admin, you have the ability to change the role of an employee/manager
-		// This function simply switches the role, i.e. if they are a manager, they will become an employee and vice versa
-		
-//		User admin = (User) session.getAttribute("user"); 
-//		System.out.println(admin.getRole());
-//		
-//		if (admin.getRole().equals("admin")) {
-//			System.out.println("You are an admin");
-//			
-//		} else {
-//			System.out.println("You are not an admin");
-//		}
-	
 		Optional<User> optional = userService.findByEmail(email);
 		
 		if(!optional.isPresent()) {
 			return ResponseEntity.badRequest().build();
 		}
 		
-		
-		System.out.println("Before change: "+ optional);
 		User user = optional.get();
 		
 		if (optional.get().getRole().equals("employee")) {
@@ -114,9 +99,6 @@ public class UserController {
 		}
 		
 		userService.changeRole(user);
-		System.out.println("After change: "+ user);
-		
-		
 		
 		return ResponseEntity.status(200).build();
 	}
